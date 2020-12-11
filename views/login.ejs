@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="cont">
+            <div class="layer">
+
+            </div>
+        </div>
+        <form id="login" class="bg-light">
+            <div class="mt-4 h3 text-center text-info">Welcome to Ghumphir</div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" required  autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-primary col-3">Login</button>
+            <div class="form-group">Not Registered? <a class="text-info" href="/signup">Sign up</a></div>
+        </form>
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyDBxog49_vq8d8Y89bcIyRdKJ1hHphD7l0",
+                authDomain: "ghumphir-88668.firebaseapp.com",
+                databaseURL: "https://ghumphir-88668.firebaseio.com",
+                projectId: "ghumphir-88668",
+                storageBucket: "ghumphir-88668.appspot.com",
+                messagingSenderId: "864805870658",
+                appId: "1:864805870658:web:d1d2af356688bc4a9a21db"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        
+            
+            document.addEventListener('submit', (event) => {
+                event.preventDefault();
+                let email = document.getElementById('email');
+                let password = document.getElementById('password');
+
+                firebase
+                    .auth()
+                    .signInWithEmailAndPassword(email.value, password.value)
+                    .then(({user}) => {
+                        return user.getIdToken().then( (idToken) => {
+                                firebase.firestore().collection('users').doc(user.uid).get()
+                                .then((users) => {
+                                    
+                                    if(typeof users.data().hotel !== 'undefined'){
+                                        fetch("/", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({idToken: idToken, uid: user.uid, email: user.email, hotel: users.data().hotel})
+                                        })
+                                        window.location = '/hotel/home';
+                                    }
+                                    else{
+                                        console.log(users.data().firstName);
+                                        fetch("/", {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({idToken: idToken, email: user.email, firstName: users.data().firstName, lastName: users.data().lastName})
+                                        })
+                                        window.location = '/users/home';
+                                    }
+                                })
+                            return fetch("/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({idToken: idToken, email: user.email})
+                            })
+                        })
+                    })
+                    .catch((error) => {
+                        fetch("/", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({message: error.message}),
+                        })
+                        .then(function(res){ return res.json(); })
+                        .then(function(data){ alert(data.msg) })
+                    })
+            });
+
+
+
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </body>
+</html>

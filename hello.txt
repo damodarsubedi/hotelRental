@@ -1,0 +1,4 @@
+1) clone the project
+2) go to the project directory in command line
+3) Type "npm install", to install al dependency
+4) Type "node app", to run the project

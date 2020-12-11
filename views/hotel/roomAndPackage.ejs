@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <style>
+        body{
+            background-image: url('/images/darkmap.png');
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand col-4 text-info pl-5" href="#">Ghumphir</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="/hotel/home">Home</a>
+                    </li>
+                    <li class="nav-item px-3">
+                        <a class="nav-link" href="/hotel/roomandpackage">Rooms and Package</a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link" href="#">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <span class="mr-3"><%= name %></span>
+                    <button class="btn btn-outline-info" onclick="signOut()">Sign out</button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="container" style="background-color: rgba(248, 249, 250, 0.8); border-radius: 10px;">
+            <div class="row mt-5 pb-4">
+                <div class="col-6 px-5">
+                    <h3 class="headingRooms mt-4">Current Rooms</h3>
+                    <div id="accordion">
+                        
+                    </div>
+                </div>
+                <div class="col-12 px-5">
+
+                    <h3 class="mt-4 headingRooms">Add Rooms</h3>
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#addRoom" aria-expanded="true" aria-controls="addRoom">
+                                    Add Rooms
+                                </button>
+                                </h2>
+                            </div>
+                        
+                            <div id="addRoom" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="card-body">
+                                        <form method="POST" enctype="multipart/form-data" id="formRoom">
+                                            <div class="form-group">
+                                                <label for="roomType">Room Type</label>
+                                                <input type="text" class="form-control" id="roomType" placeholder="Enter room type">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="noPeople">Max no of People</label>
+                                                <input type="number" class="form-control" id="noPeople" placeholder="No of people the room can hold">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="noRoom">No of Rooms</label>
+                                                <input type="number" class="form-control" id="noRoom" placeholder="No of rooms matching the curren description">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="price">Price of a Room</label>
+                                                <input type="number" class="form-control" id="price" placeholder="Price for each room">
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="attachedBathroom">
+                                                <label class="form-check-label" for="attachedBathroom">Attached Bathroom</label>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-2">
+                                                    <label>Picture of room</label>
+                                                    <a class="btn btn-outline-info" onclick="c()">Upload</a>
+                                                    <input type="file" name="photo" style="display: none;" id="Photo" onchange="previewImage(event)"/>
+                                                </div>
+                                                <img class="mt-3 col-10" id="preview" style="height: 400px;">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary col-3 mt-2">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDBxog49_vq8d8Y89bcIyRdKJ1hHphD7l0",
+        authDomain: "ghumphir-88668.firebaseapp.com",
+        databaseURL: "https://ghumphir-88668.firebaseio.com",
+        projectId: "ghumphir-88668",
+        storageBucket: "ghumphir-88668.appspot.com",
+        messagingSenderId: "864805870658",
+        appId: "1:864805870658:web:d1d2af356688bc4a9a21db"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            
+        } else {
+            window.location = '/';
+        }
+    });
+    function signOut(){
+        firebase.auth().signOut().then(() => {
+            fetch('/signout', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            window.location = '/';
+        });
+    }
+    
+    function previewImage(event) {
+        var result = document.getElementById('preview');
+        result.src = URL.createObjectURL(event.target.files[0]);
+    }
+
+    function c(){
+        document.getElementById('Photo').click();
+    }
+
+    firebase.firestore().collection('rooms').where("uid", "==", "<%= uid %>").get()
+    .then((rooms) => {
+        rooms.docs.forEach((room,index) => {
+            let card = document.createElement('div');
+            card.className = "card";
+            isAttached = "No";
+            if(room.data().attachedBathroom){
+                isAttached = "Yes";
+            }
+            let element = `
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                        <button class="btn btn-link collapsed text-dark" data-toggle="collapse" data-target="#collapseThree${index}" aria-expanded="false" aria-controls="collapseThree${index}">
+                            ${room.data().roomType}
+                        </button>
+                        <span class="float-right fa fa-trash mt-2" onclick="deleteRoom('${room.id}')"></span>
+                        </h5>
+                    </div>
+                    <div id="collapseThree${index}" class="collapse" aria-labelledby="headingThree${index}" data-parent="#accordion">
+                        <div class="card-body">
+                            <img src="/uploads/${room.data().imagePath}" width="250px" height="150px"><br><br>
+                            People adjustable in each room: &nbsp;${room.data().noOfPeople}<br>
+                            No of Room: &nbsp;${room.data().noOfRoom}<br>
+                            Attached Bathroom: &nbsp;${isAttached}<br>
+                            Price per Room: &nbsp;Rs. ${room.data().price}
+                        </div>
+                    </div>
+            `;
+            card.innerHTML = element;
+            document.getElementById('accordion').appendChild(card);
+        });
+    })
+
+    document.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let roomType = document.getElementById('roomType');
+        let noOfPeople = document.getElementById('noPeople');
+        let noOfRoom = document.getElementById('noRoom');
+        let price = document.getElementById('price');
+        let attachedBathroom = document.getElementById('attachedBathroom');
+        let photo = document.getElementById('Photo');
+        let imagePath = '<%= uid %>'+ roomType.value + noOfPeople.value + noOfRoom.value + price.value + '-' + photo.value.split("\\").pop();
+        let uid = "<%= uid %>";
+        
+        firebase.firestore().collection('rooms').doc().set({
+            uid: uid,
+            roomType: roomType.value,
+            noOfPeople: noOfPeople.value,
+            noOfRoom: noOfRoom.value,
+            price: price.value,
+            attachedBathroom: attachedBathroom.checked,
+            imagePath: imagePath.split(' ').join('')
+        })
+        .then(() => {
+            fetch("/hotel/addRommImagePath", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({imagePath: imagePath.split(' ').join('')})
+            })
+            return document.getElementById('formRoom').submit();
+        })
+    });
+
+    function deleteRoom(roomid){
+        firebase.firestore().collection('rooms').doc(roomid).delete()
+        .then(() => {
+            alert("Rooms deleted successfully");
+            window.location.reload();
+        })
+    }
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>

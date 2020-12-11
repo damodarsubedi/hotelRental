@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+    <!--booking-->
+		<section id="booking" class="section">
+			<div class="section-center">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="booking-cta">
+								<h1>Make your reservation</h1>
+								<p>To book your room online here is the form that you have to fill</p>
+							</div>
+						</div>
+						<div class="col-md-6 col-md-offset-1">
+							<div class="booking-form">
+								<form method="POST" enctype="multipart/form-data" id="formRoom">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="text" id="name" />
+												<span class="form-label">Name</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="email" id="email" />
+												<span class="form-label">Email</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="tel" id="phone" />
+												<span class="form-label">Phone</span>
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-6">
+											<div class="form-group">
+												<span class="form-label">Rooms</span>
+												<select class="form-control"  id="roomno" >
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-6">
+											<div class="form-group">
+												<span class="form-label">Guests</span>
+												<select class="form-control"  id="guestno" >
+													<option>1 Person</option>
+													<option>2 People</option>
+													<option>3 People</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="date" required  id="checkin">
+												<span class="form-label">Check In</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="date" required  id="checkout">
+												<span class="form-label">Check Out</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-btn" id="btnbook">
+										<button type="submit" id="btn" class="submit-btn" >Book Now</button>
+									</div>
+
+									<div id="msg">
+										<pre></pre>
+
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--contact page-->
+		</section>
+
+    
+</body>
+</html>

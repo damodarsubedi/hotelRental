@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		
+
+		<title>Home</title>
+		<style>
+			/* Set the size of the div element that contains the map */
+		#map {
+			height: 400px;  /* The height is 400 pixels */
+			width: 100%;  /* The width is the width of the web page */
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand col-4 text-info pl-5" href="#">Ghumphir</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item px-2">
+						<a class="nav-link" href="/users/home">Home</a>
+					</li>
+					<li class="nav-item px-3">
+						<a class="nav-link" href="/users/booking">My Booking</a>
+					</li>
+					<li class="nav-item px-2">
+						<a class="nav-link" href="#">Disabled</a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<!-- <span class="mr-3"><%= name %></span> -->
+					<button class="btn btn-outline-info" onclick="signOut()">Sign out</button>
+				</form>
+			</div>
+		</nav>
+		
+
+	<!--banner image carousel-->
+		<section class="section1">
+			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner ">
+				<div class="carousel-item active" id="slide1">
+					<div class="carousel-caption">
+						<h5>Travel with us</h5>
+						<p>Adventure is waiting for you there</p>
+						<a href="#booking"><button  id="" class="button btn-primary" type="button" value=""><span>Explore</span></button></a>
+
+					</div>
+				</div>
+				<div class="carousel-item" id="slide2">
+					<div class="carousel-caption align-items-center justify-content-center">
+						<h5>Travel with us</h5>
+						<p>Adventure is waiting for you there</p>
+						<a href="#booking"><button  id="" class="button btn-primary" type="button" value=""><span>Explore</span></button></a>
+
+					</div>
+				</div>
+				<div class="carousel-item" id="slide3">
+					<div class="carousel-caption">
+						<h5>Travel with us</h5>
+						<p>Adventure is waiting for you there</p>
+						<a href="#booking"><button  id="" class="button btn-primary" type="button" value=""><span>Explore</span></button></a>
+
+					</div>
+				</div>
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+				</a>
+			</div>	
+		</section>
+
+		<!-- <button onclick="signOut()">SIgn out</button> -->
+		<div id="map"></div>
+
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" style="display: none;" id="modalButton" data-target="#hotelModal">
+			Launch demo modal
+		</button>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="hotelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="modalTitle"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body" id="modal-body">
+				
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<!--booking-->
+		<section id="booking" class="section">
+			<div class="section-center">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="booking-cta">
+								<h1>Make your reservation</h1>
+								<p>To book your room online here is the form that you have to fill</p>
+							</div>
+						</div>
+						<div class="col-md-6 col-md-offset-1">
+							<div class="booking-form">
+								<form method="POST" enctype="multipart/form-data" id="formRoom">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="text" id="name" />
+												<span class="form-label">Name</span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="email" id="email" />
+												<span class="form-label">Email</span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="tel" id="phone" />
+												<span class="form-label">Phone</span>
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-6">
+											<div class="form-group">
+												<span class="form-label">Rooms</span>
+												<select class="form-control"  id="roomno" >
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-6">
+											<div class="form-group">
+												<span class="form-label">Guests</span>
+												<select class="form-control"  id="guestno" >
+													<option>1 Person</option>
+													<option>2 People</option>
+													<option>3 People</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-3 col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="date" required  id="checkin">
+												<span class="form-label">Check In</span>
+											</div>
+										</div>
+										<div class="col-md-3 col-md-6">
+											<div class="form-group">
+												<input class="form-control" type="date" required  id="checkout">
+												<span class="form-label">Check Out</span>
+											</div>
+										</div>
+
+										<div class="col-md-3 col-md-6">
+											<div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="booked" onclick="return false;">
+                                                <label class="form-check-label" for="attachedBathroom">Confirmed</label>
+                                            </div>
+										</div>
+
+									</div>
+									<div class="form-btn" id="btnbook">
+										<button type="submit" id="btn" class="submit-btn" >Book Now</button>
+									</div>
+
+									<div id="msg">
+										<pre></pre>
+
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--contact page-->
+		</section>
+
+		<!-- <div class="container">  
+			<form id="contact" action="" method="post">
+			<h3>Quick Contact</h3>
+			<h4>Contact us today, and get reply with in 24 hours!</h4>
+			<fieldset>
+				<input placeholder="Your name" type="text" tabindex="1" required autofocus>
+			</fieldset>
+			<fieldset>
+				<input placeholder="Your Email Address" type="email" tabindex="2" required>
+			</fieldset>
+			<fieldset>
+				<input placeholder="Your Phone Number" type="tel" tabindex="3" required>
+			</fieldset>
+			<fieldset>
+				<input placeholder="Your Web Site starts with http://" type="url" tabindex="4" required>
+			</fieldset>
+			<fieldset>
+				<textarea placeholder="Type your Message Here...." tabindex="5" required></textarea>
+			</fieldset>
+			<fieldset>
+				<button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+			</fieldset>
+			</form>
+		
+			
+		</div> -->
+
+		<!--footer-->
+		<section>
+			
+		</section>
+
+
+		<!-- The core Firebase JS SDK is always required and must be listed first -->
+		<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+		<script>
+			$('.form-control').each(function () {
+				floatedLabel($(this));
+			});
+
+			$('.form-control').on('input', function () {
+				floatedLabel($(this));
+			});
+
+			function floatedLabel(input) {
+				var $field = input.closest('.form-group');
+				if (input.val()) {
+					$field.addClass('input-not-empty');
+				} else {
+					$field.removeClass('input-not-empty');
+				}
+			}
+			function initMap() {
+				// The location of Uluru
+				var mylatlng = {lat: 27, lng: 85};
+				var mylatlng1 = {lat: 28, lng: 85};
+				// The map, centered at Uluru
+				var map = new google.maps.Map(
+					document.getElementById('map'), {zoom: 12, center: mylatlng}
+				);
+				// The marker, positioned at Uluru
+
+				firebase.firestore().collection('users').get().then((users)=>{
+					
+						users.docs.forEach((user) => {
+							if(user.data().hotel){
+								//console.log(user.data());
+								var mylatlng2 = {lat: parseInt(user.data().latitude), lng: parseInt(user.data().longitude)}
+								var marker = new google.maps.Marker({position: mylatlng2,animation:google.maps.Animation.BOUNCE, map: map,title: user.data().hotel+','+user.id})			
+								// marker.addListener('click', function(event){
+								// 	console.log(event.target)
+								// 	alert("hekko");
+								// });
+							}
+						});
+					
+
+				})
+				
+				var marker = new google.maps.Marker({position: mylatlng, map: map, title: "hotel"});
+
+				var marker = new google.maps.Marker({position: mylatlng1,animation:google.maps.Animation.BOUNCE, map: map,title: "hotel2"});
+				
+				
+				// map.addListener("center_changed", function() {
+				// 	// 3 seconds after the center of the map has changed, pan back to the
+				// 	// marker.
+				// 	window.setTimeout(function() {
+				// 	map.panTo(marker.getPosition());
+				// 	}, 3000);
+				// });
+				// marker.addListener('click', function() {
+				// 	map.setZoom(8);
+					
+				// 	// window.location= '/users/home';
+				// });
+			}
+			
+		</script>
+		<script>
+			// Your web app's Firebase configuration
+			var firebaseConfig = {
+				apiKey: "AIzaSyDBxog49_vq8d8Y89bcIyRdKJ1hHphD7l0",
+				authDomain: "ghumphir-88668.firebaseapp.com",
+				databaseURL: "https://ghumphir-88668.firebaseio.com",
+				projectId: "ghumphir-88668",
+				storageBucket: "ghumphir-88668.appspot.com",
+				messagingSenderId: "864805870658",
+				appId: "1:864805870658:web:d1d2af356688bc4a9a21db"
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					
+				} else {
+					window.location = '/';
+				}
+			});
+			function signOut(){
+				firebase.auth().signOut().then(() => {
+					window.location = '/';
+				});
+			}
+			const db = firebase.firestore();
+
+			firebase.firestore().collection('hotel').get()
+					.then((hotel) => {
+						hotel.docs.forEach((hotels) => {
+							//console.log(hotels.id);
+						})
+
+					})
+
+					document.addEventListener('submit', (event) => {
+						event.preventDefault();
+						let name = document.getElementById('name');
+						let email = document.getElementById('email');
+						let phone = document.getElementById('phone');
+						let rooms = document.getElementById('roomno');
+						let guests = document.getElementById('guestno');
+						let checkin = document.getElementById('checkin');
+						let checkout = document.getElementById('checkout');
+						let uid = "<%= uid %>";
+
+						firebase.firestore().collection('booking').doc().set({
+							uid: uid,
+							name: name.value,
+							email: email.value,
+							phone: phone.value,
+							rooms: rooms.value,
+							guests: guests.value,
+							checkin: checkin.value,
+							checkout: checkout.value,
+							confirmation:false,
+						})
+						.then(() => {
+							fetch("/booking", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json"
+								},
+								body: JSON.stringify({})	
+							})
+							alert('You have successfully booked')
+							return document.getElementById('formRoom').submit();
+						})
+						.catch(err => console.log(err))
+					});
+
+					function deleteBooking(booking){
+						firebase.firestore().collection('booking').doc(roomid).delete().then(()=>{
+							alert("Rooms delete Sucessfully");
+							window.location.reload();
+						})
+					}
+
+		</script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+		<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBxog49_vq8d8Y89bcIyRdKJ1hHphD7l0&callback=initMap">
+		</script>
+
+		<script>
+			
+			var mapEl = document.getElementById('map');
+			var hotelName;
+
+			mapEl.addEventListener('click', function(event){
+				if(event.target.tagName === "IMG"){
+					hotelName = event.target.parentElement.getAttribute('title');
+				}
+				if(event.target.tagName === "AREA"){
+					hotelName = event.target.getAttribute('title');
+				}
+
+				document.getElementById('modal-body').innerHTML = "";
+				firebase.firestore().collection('rooms').where("uid", "==", hotelName.split(',')[1]).get()
+				.then((rooms) => {
+					// if(rooms.docs.length == 0){
+					// 	alert('There is no room available in this hotel');
+					// }
+					// else{
+						rooms.docs.forEach((room,index) => {
+							let card = document.createElement('div');
+							card.className = "card";
+							isAttached = "No";
+							if(room.data().attachedBathroom){
+								isAttached = "Yes";
+							}
+							let element = `
+									<div class="card-header" id="headingThree">
+										<h5 class="mb-0">
+											${room.data().roomType}
+										</h5>
+										<div class="card-body">
+											<img src="/uploads/${room.data().imagePath}" width="200px" height="120px"><br><br>
+											People adjustable in each room: &nbsp;${room.data().noOfPeople}<br>
+											No of Room: &nbsp;${room.data().noOfRoom}<br>
+											Attached Bathroom: &nbsp;${isAttached}<br>
+											Price per Room: &nbsp;Rs. ${room.data().price}<br><br>
+											<a href="#"><button class="btn btn-outline-primary px-4">Book</button></a>
+										</div>
+									</div>
+							`;
+							card.innerHTML = element;
+							document.getElementById('modal-body').appendChild(card);
+							document.getElementById('modalTitle').innerText = hotelName.split(',')[0];
+							document.getElementById('modalButton').click();
+						});
+					//}
+				})
+			})
+		</script>
+
+	</body>
+
+
+
+</html>
+
+
